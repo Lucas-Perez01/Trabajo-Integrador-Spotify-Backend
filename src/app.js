@@ -3,14 +3,7 @@
  * Los estudiantes deben completar la configuración de middlewares y rutas
  */
 
-const express = require("express");
-const cors = require("cors");
-const helmet = require("helmet");
-const rateLimit = require("express-rate-limit");
-
 // TODO: Importar las rutas
-
-const app = express();
 
 // TODO: Configurar CORS
 
@@ -24,4 +17,46 @@ const app = express();
 
 // TODO: Configurar ruta 404
 
-module.exports = app;
+// src/app.js
+import express from "express";
+import cors from "cors";
+import helmet from "helmet";
+import rateLimit from "express-rate-limit";
+
+const app = express();
+
+// Middlewares de seguridad y parseo
+app.use(helmet());
+app.use(cors());
+app.use(express.json());
+
+app.use(
+  rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutos
+    max: 100,
+  })
+);
+
+// Ruta de prueba
+app.get("/api/v1/test", async (req, res) => {
+  try {
+    //probar la conexión a la Base de Datos
+    res.json({ message: "Prueba de conexión" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Error conectando con la base de datos" });
+  }
+});
+
+// Middleware de manejo de errores
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({ error: "Error interno del servidor" });
+});
+
+// Ruta 404
+app.use((req, res) => {
+  res.status(404).json({ error: "Endpoint no encontrado" });
+});
+
+export default app;
