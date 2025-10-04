@@ -23,6 +23,9 @@ import cors from "cors";
 import helmet from "helmet";
 import rateLimit from "express-rate-limit";
 
+// Importamos rutas
+import usuariosRoutes from "./routes/usuarios.js";
+
 const app = express();
 
 // Middlewares de seguridad y parseo
@@ -48,9 +51,11 @@ app.get("/api/v1/test", async (req, res) => {
   }
 });
 
+app.use("/api/v1/usuarios", usuariosRoutes);
+
 // Middleware de manejo de errores
-app.use((err, req, res, next) => {
-  console.error(err.stack);
+app.use((error, req, res, next) => {
+  console.error(error.stack);
   res.status(500).json({ error: "Error interno del servidor" });
 });
 
