@@ -9,8 +9,11 @@
 
 // server.js
 import app from "./src/app.js";
+import config from "./src/config/index.js";
+import dotenv from "dotenv";
+dotenv.config();
 
-const PORT = process.env.PORT || 3000;
+const PORT = config.port || 3000;
 
 // Iniciar servidor
 const server = app.listen(PORT, () => {
