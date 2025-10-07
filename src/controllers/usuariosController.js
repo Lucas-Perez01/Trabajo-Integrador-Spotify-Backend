@@ -43,7 +43,7 @@ const createUsuario = async (req, res) => {
       cp,
       id_pais,
       tipo_usuario_actual,
-    } = req.body;
+    } = req.validated.body;
 
     // Hash del password
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -51,11 +51,12 @@ const createUsuario = async (req, res) => {
     const usuario = await Usuario.create({
       email,
       password: hashedPassword,
-      fecha_nacimiento: fecha_nac,
+      fecha_nac,
       sexo,
-      codigo_postal: cp,
-      pais: id_pais,
-      fecha_modificacion_password: new Date(),
+      cp,
+      id_pais,
+      tipo_usuario_actual,
+      fecha_ult_mod_password: new Date(),
     });
 
     res.status(201).json(usuario);
@@ -115,7 +116,9 @@ const listarUsuariosPasswordVencida = async (req, res) => {
 
     const usuariosVencidos = await Usuario.findAll({
       where: {
-        fecha_modificacion_password: { [Op.lt]: noventaDias },
+        fecha_ult_mod_password: {
+          [Op.lt]: noventaDias,
+        },
       },
     });
 

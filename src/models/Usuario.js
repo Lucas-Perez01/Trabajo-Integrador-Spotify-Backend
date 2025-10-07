@@ -1,13 +1,6 @@
-/**
- * Modelo Usuario
- * Los estudiantes deben implementar todas las operaciones CRUD para usuarios
- */
-
 // src/models/Usuario.js
 import { DataTypes } from "sequelize";
 import { sequelize } from "../config/database.js";
-
-// Modelo Usuario
 
 const Usuario = sequelize.define(
   "Usuario",
@@ -24,25 +17,32 @@ const Usuario = sequelize.define(
     },
     password: {
       type: DataTypes.STRING(100),
+      field: "password_hash",
       allowNull: false,
     },
-    fecha_nacimiento: {
+    fecha_nac: {
       type: DataTypes.DATEONLY,
-      allowNull: false,
+      allowNull: true,
     },
     sexo: {
-      type: DataTypes.STRING(10),
-      allowNull: false,
+      type: DataTypes.CHAR(1),
+      allowNull: true,
     },
-    codigo_postal: {
+    cp: {
       type: DataTypes.STRING(30),
+      allowNull: true,
     },
-    pais: {
-      type: DataTypes.STRING(40),
+    id_pais: {
+      type: DataTypes.INTEGER,
       allowNull: false,
     },
-    fecha_modificacion_password: {
+    tipo_usuario_actual: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
+    fecha_ult_mod_password: {
       type: DataTypes.DATE,
+      allowNull: true,
     },
   },
   {

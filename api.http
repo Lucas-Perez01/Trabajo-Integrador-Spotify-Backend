@@ -11,12 +11,12 @@ POST {{baseUrl}}/usuarios
 Content-Type: {{json}}
 
 {
-  "email": "ana.garcia@example.com",
+  "email": "julian.garcia@example.com",
   "password": "Secr3t0!",
   "fecha_nac": "1995-05-20",
   "sexo": "F",
   "cp": "4600",
-  "id_pais": 10,
+  "id_pais": 2,
   "tipo_usuario_actual": 1
 }
 
