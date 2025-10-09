@@ -1,8 +1,3 @@
-/**
- * Controlador de Usuarios
- * Los estudiantes deben implementar toda la lógica de negocio para usuarios
- */
-
 import Usuario from "../models/Usuario.js";
 import bcrypt from "bcrypt";
 import { Op } from "sequelize";
@@ -13,8 +8,10 @@ const getUsuarios = async (req, res) => {
     const usuarios = await Usuario.findAll();
     res.json(usuarios);
   } catch (error) {
-    console.error("Error al obtener usuarios:", error);
-    res.status(500).json({ error: "Error al obtener usuarios" });
+    console.error("❌ Error al obtener usuarios:", error);
+    res
+      .status(500)
+      .json({ error: "Error interno", message: "Error al obtener usuarios" });
   }
 };
 
@@ -23,12 +20,16 @@ const getUsuarioById = async (req, res) => {
   try {
     const usuario = await Usuario.findByPk(req.params.id);
     if (!usuario) {
-      return res.status(404).json({ error: "Usuario no encontrado" });
+      return res
+        .status(404)
+        .json({ error: "No encontrado", message: "Usuario no encontrado" });
     }
     res.json(usuario);
   } catch (error) {
-    console.error("Error al obtener usuario:", error);
-    res.status(500).json({ error: "Error al obtener usuario" });
+    console.error("❌ Error al obtener usuario:", error);
+    res
+      .status(500)
+      .json({ error: "Error interno", message: "Error al obtener usuario" });
   }
 };
 
@@ -45,7 +46,21 @@ const createUsuario = async (req, res) => {
       tipo_usuario_actual,
     } = req.validated.body;
 
-    // Hash del password
+    if (!email || !password || !fecha_nac || !sexo || !cp || !id_pais) {
+      return res.status(400).json({
+        error: "Datos faltantes",
+        message: "Todos los campos son obligatorios",
+      });
+    }
+
+    const existe = await Usuario.findOne({ where: { email } });
+    if (existe) {
+      return res.status(409).json({
+        error: "Conflicto",
+        message: "El email ya está registrado",
+      });
+    }
+
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const usuario = await Usuario.create({
@@ -59,10 +74,27 @@ const createUsuario = async (req, res) => {
       fecha_ult_mod_password: new Date(),
     });
 
-    res.status(201).json(usuario);
+    return res.status(201).json(usuario);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Error al crear usuario" });
+    console.error("❌ Error al crear usuario:", error);
+
+    if (error.name === "SequelizeForeignKeyConstraintError") {
+      return res.status(400).json({
+        error: "Error de referencia",
+        message: "El país o tipo de usuario no existe",
+      });
+    }
+
+    if (error.name === "SequelizeUniqueConstraintError") {
+      return res.status(409).json({
+        error: "Duplicado",
+        message: "Ya existe un registro con esos datos únicos",
+      });
+    }
+
+    res
+      .status(500)
+      .json({ error: "Error interno", message: "Error al crear usuario" });
   }
 };
 
@@ -72,24 +104,27 @@ const updateUsuario = async (req, res) => {
     const { id } = req.params;
     const updates = { ...req.body };
 
-    // Si se actualiza password, hash y actualizar fecha_modificacion_password
     if (updates.password) {
       updates.password = await bcrypt.hash(updates.password, 10);
-      updates.fecha_modificacion_password = new Date();
+      updates.fecha_ult_mod_password = new Date();
     }
-
     const [updated] = await Usuario.update(updates, {
       where: { id_usuario: id },
     });
 
-    if (!updated)
-      return res.status(404).json({ error: "Usuario no encontrado" });
+    if (!updated) {
+      return res
+        .status(404)
+        .json({ error: "No encontrado", message: "Usuario no encontrado" });
+    }
 
     const usuarioActualizado = await Usuario.findByPk(id);
     res.json(usuarioActualizado);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Error al actualizar usuario" });
+    console.error("❌ Error al actualizar usuario:", error);
+    res
+      .status(500)
+      .json({ error: "Error interno", message: "Error al actualizar usuario" });
   }
 };
 
@@ -98,13 +133,17 @@ const deleteUsuario = async (req, res) => {
   try {
     const usuario = await Usuario.findByPk(req.params.id);
     if (!usuario) {
-      return res.status(404).json({ error: "Usuario no encontrado" });
+      return res
+        .status(404)
+        .json({ error: "No encontrado", message: "Usuario no encontrado" });
     }
     await usuario.destroy();
-    res.json({ mensaje: "Usuario eliminado correctamente" });
+    res.json({ message: "Usuario eliminado correctamente" });
   } catch (error) {
-    console.error("Error al eliminar usuario:", error);
-    res.status(500).json({ error: "Error al eliminar usuario" });
+    console.error("❌ Error al eliminar usuario:", error);
+    res
+      .status(500)
+      .json({ error: "Error interno", message: "Error al eliminar usuario" });
   }
 };
 
@@ -124,14 +163,13 @@ const listarUsuariosPasswordVencida = async (req, res) => {
 
     res.json(usuariosVencidos);
   } catch (error) {
-    console.error(error);
-    res
-      .status(500)
-      .json({ error: "Error al listar usuarios con password vencida" });
+    console.error("❌ Error al listar usuarios vencidos:", error);
+    res.status(500).json({
+      error: "Error interno",
+      message: "Error al listar usuarios con password vencida",
+    });
   }
 };
-
-// Exportamos las funciones del controlador
 
 export {
   getUsuarios,

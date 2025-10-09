@@ -11,7 +11,7 @@ POST {{baseUrl}}/usuarios
 Content-Type: {{json}}
 
 {
-  "email": "julian.garcia@example.com",
+  "email": "julianaa.garcia@example.com",
   "password": "Secr3t0!",
   "fecha_nac": "1995-05-20",
   "sexo": "F",
