@@ -25,6 +25,7 @@ import rateLimit from "express-rate-limit";
 
 // Importamos rutas
 import usuariosRoutes from "./routes/usuarios.js";
+import artistaRoutes from "./routes/artistas.js";
 
 const app = express();
 
@@ -52,6 +53,7 @@ app.get("/api/v1/test", async (req, res) => {
 });
 
 app.use("/api/v1/usuarios", usuariosRoutes);
+app.use("/api/v1/artistas", artistaRoutes);
 
 // Middleware de manejo de errores
 app.use((error, req, res, next) => {
