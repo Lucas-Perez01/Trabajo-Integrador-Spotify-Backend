@@ -11,7 +11,7 @@ POST {{baseUrl}}/usuarios
 Content-Type: {{json}}
 
 {
-  "email": "julianaa.garcia@example.com",
+  "email": "julianaaa.garcia@example.com",
   "password": "Secr3t0!",
   "fecha_nac": "1995-05-20",
   "sexo": "F",
@@ -55,8 +55,8 @@ POST {{baseUrl}}/artistas
 Content-Type: {{json}}
 
 {
-  "nombre": "Fito Paez",
-  "imagen_url": "https://cdn.example.com/fito.jpg"
+  "nombre": "Fito Paezza",
+  "imagen_url": "https://cdn.examplefito.com/fito.jpg"
 }
 
 ### Listar artistas

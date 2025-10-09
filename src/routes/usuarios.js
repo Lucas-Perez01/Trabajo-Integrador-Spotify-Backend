@@ -26,10 +26,10 @@ import {
 
 const router = Router();
 
-// Obtener todos los usuarios (sin validación necesaria)
+// Obtener todos los usuarios
 router.get("/", getUsuarios);
 
-// Listar usuarios con password vencida (sin validación necesaria)
+// Listar usuarios con password vencida
 router.get("/password-vencidas", listarUsuariosPasswordVencida);
 
 // Obtener usuario por ID con validación
