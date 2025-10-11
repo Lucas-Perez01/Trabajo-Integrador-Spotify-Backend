@@ -78,7 +78,7 @@ Content-Type: {{json}}
 }
 
 ### Listar álbumes por artista
-GET {{baseUrl}}/albumes?artistaId=1
+GET {{baseUrl}}/albumes?artistaId=2
 
 ### Canciones de un álbum
 GET {{baseUrl}}/albumes/1/canciones
