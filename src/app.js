@@ -28,6 +28,7 @@ import usuariosRoutes from "./routes/usuarios.js";
 import artistaRoutes from "./routes/artistas.js";
 import albumRoutes from "./routes/albumes.js";
 import cancionRoutes from "./routes/canciones.js";
+import generosRoutes from "./routes/generos.js";
 
 const app = express();
 
@@ -58,6 +59,7 @@ app.use("/api/v1/usuarios", usuariosRoutes);
 app.use("/api/v1/artistas", artistaRoutes);
 app.use("/api/v1/albumes", albumRoutes);
 app.use("/api/v1/canciones", cancionRoutes);
+app.use("/api/v1/generos", generosRoutes);
 
 // Middleware de manejo de errores
 app.use((error, req, res, next) => {
