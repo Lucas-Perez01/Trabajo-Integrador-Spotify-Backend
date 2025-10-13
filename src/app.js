@@ -31,6 +31,7 @@ import cancionRoutes from "./routes/canciones.js";
 import generosRoutes from "./routes/generos.js";
 import playlistRoutes from "./routes/playlists.js";
 import suscripcionesRoutes from "./routes/suscripciones.js";
+import metodosPagoRoutes from "./routes/metodos-pago.js";
 
 const app = express();
 
@@ -64,6 +65,7 @@ app.use("/api/v1/canciones", cancionRoutes);
 app.use("/api/v1/generos", generosRoutes);
 app.use("/api/v1/playlists", playlistRoutes);
 app.use("/api/v1/suscripciones", suscripcionesRoutes);
+app.use("/api/v1/metodos-pago", metodosPagoRoutes);
 
 // Middleware de manejo de errores
 app.use((error, req, res, next) => {
