@@ -49,7 +49,6 @@ const getCanciones = async (req, res) => {
     const where = {};
 
     if (albumId) where.id_album = Number(albumId);
-    // (Cuando implementemos géneros se agregará el filtro por género)
 
     const canciones = await Cancion.findAll({ where });
     res.json(canciones);

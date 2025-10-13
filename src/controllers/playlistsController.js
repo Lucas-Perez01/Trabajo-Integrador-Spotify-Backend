@@ -68,7 +68,7 @@ const softDeletePlaylist = async (req, res) => {
 // Agregar canción a playlist
 const addCancionToPlaylist = async (req, res) => {
   try {
-    const { id } = req.params; // id_playlist
+    const { id } = req.params;
     const { id_cancion, orden } = req.validated.body;
 
     // Verificar playlist
@@ -106,7 +106,7 @@ const addCancionToPlaylist = async (req, res) => {
 // Quitar canción de playlist
 const removeCancionFromPlaylist = async (req, res) => {
   try {
-    const { id, id_cancion } = req.params; // id_playlist, id_cancion
+    const { id, id_cancion } = req.params;
 
     const eliminado = await PlaylistCancion.destroy({
       where: { id_playlist: id, id_cancion },

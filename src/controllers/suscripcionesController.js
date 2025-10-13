@@ -26,7 +26,7 @@ const createSuscripcion = async (req, res) => {
     // Crear suscripción
     const suscripcion = await Suscripcion.create({
       id_usuario,
-      tipo_usuario: tipoUsuario.nombre_tipo, // Usar el valor ENUM
+      tipo_usuario: tipoUsuario.nombre_tipo,
       fecha_inicio,
       fecha_renovacion,
     });

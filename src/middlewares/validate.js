@@ -9,7 +9,7 @@ const validate = (schema) => (req, res, next) => {
     return res.status(400).json({ errors: result.error.errors });
   }
 
-  // Sobrescribimos req.validated con los datos parseados
+  // Aca sobrescribimos req.validated con los datos parseados
   req.validated = result.data;
   next();
 };
