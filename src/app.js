@@ -24,15 +24,7 @@ import helmet from "helmet";
 import rateLimit from "express-rate-limit";
 
 // Importamos rutas
-import usuariosRoutes from "./routes/usuarios.js";
-import artistaRoutes from "./routes/artistas.js";
-import albumRoutes from "./routes/albumes.js";
-import cancionRoutes from "./routes/canciones.js";
-import generosRoutes from "./routes/generos.js";
-import playlistRoutes from "./routes/playlists.js";
-import suscripcionesRoutes from "./routes/suscripciones.js";
-import metodosPagoRoutes from "./routes/metodos-pago.js";
-import pagosRoutes from "./routes/pagos.js";
+import routes from "./routes/index.js";
 
 const app = express();
 
@@ -59,15 +51,7 @@ app.get("/api/v1/test", async (req, res) => {
   }
 });
 
-app.use("/api/v1/usuarios", usuariosRoutes);
-app.use("/api/v1/artistas", artistaRoutes);
-app.use("/api/v1/albumes", albumRoutes);
-app.use("/api/v1/canciones", cancionRoutes);
-app.use("/api/v1/generos", generosRoutes);
-app.use("/api/v1/playlists", playlistRoutes);
-app.use("/api/v1/suscripciones", suscripcionesRoutes);
-app.use("/api/v1/metodos-pago", metodosPagoRoutes);
-app.use("/api/v1/pagos", pagosRoutes);
+app.use("/api/v1", routes);
 
 // Middleware de manejo de errores
 app.use((error, req, res, next) => {
