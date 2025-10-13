@@ -145,24 +145,24 @@ POST {{baseUrl}}/playlists
 Content-Type: {{json}}
 
 {
-  "titulo": "Para correr",
+  "titulo": "Para pasar el rato",
   "id_usuario": 1
 }
 
 ### Agregar canción a playlist
-POST {{baseUrl}}/playlists/1/canciones
+POST {{baseUrl}}/playlists/4/canciones
 Content-Type: {{json}}
 
 {
   "id_cancion": 1,
-  "orden": 1
+  "orden": 3
 }
 
 ### Quitar canción de playlist
-DELETE {{baseUrl}}/playlists/1/canciones/1
+DELETE {{baseUrl}}/playlists/4/canciones/1
 
 ### Eliminar (soft-delete) playlist → debe enviar fecha_eliminada
-PUT {{baseUrl}}/playlists/1
+PUT {{baseUrl}}/playlists/5
 Content-Type: {{json}}
 
 {
