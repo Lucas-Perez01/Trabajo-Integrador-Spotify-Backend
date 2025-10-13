@@ -6,6 +6,7 @@
 // src/controllers/albumController.js
 import Album from "../models/Album.js";
 import Artista from "../models/Artista.js";
+import Cancion from "../models/Cancion.js";
 
 const createAlbum = async (req, res) => {
   try {

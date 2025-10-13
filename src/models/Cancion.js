@@ -5,6 +5,8 @@
 
 import { DataTypes } from "sequelize";
 import { sequelize } from "../config/database.js";
+import Genero from "./Genero.js";
+import CancionGenero from "./CancionGenero.js";
 
 const Cancion = sequelize.define(
   "Cancion",
@@ -49,5 +51,11 @@ const Cancion = sequelize.define(
     timestamps: false,
   }
 );
+
+Cancion.belongsToMany(Genero, {
+  through: CancionGenero,
+  foreignKey: "id_cancion",
+  otherKey: "id_genero",
+});
 
 export default Cancion;
