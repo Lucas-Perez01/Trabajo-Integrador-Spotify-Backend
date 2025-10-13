@@ -204,6 +204,9 @@ Content-Type: {{json}}
   "fecha_renovacion": "2025-09-01T00:00:00Z"
 }
 
+### Listar suscripciones
+GET {{baseUrl}}/suscripciones
+
 
 ### ==========================
 ### MÉTODOS DE PAGO
