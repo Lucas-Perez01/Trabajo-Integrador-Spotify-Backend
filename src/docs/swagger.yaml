@@ -3,22 +3,22 @@ info:
   title: Spotify Backend API
   description: |
     API REST para plataforma de streaming musical estilo Spotify.
-    
+
     ## Características principales:
     - Gestión completa de usuarios, artistas, álbumes y canciones
     - Sistema de playlists con soft-delete
     - Manejo de suscripciones y pagos
     - Vistas avanzadas con JOINs complejos
     - Validaciones exhaustivas y manejo de errores
-    
+
     ## Ejercicios adicionales:
     - **Vistas con JOINs**: Consultas complejas para análisis de datos
     - **Canciones populares por país**: Análisis de reproducciones por ubicación geográfica
     - **Ingresos por artista/discográfica**: Análisis financiero detallado
-    
+
     ## Autenticación:
     Algunos endpoints pueden requerir autenticación JWT (implementación opcional).
-    
+
   version: 1.0.0
   contact:
     name: Proyecto Integrador UNTreF
@@ -77,7 +77,7 @@ paths:
             minimum: 1
             maximum: 100
       responses:
-        '200':
+        "200":
           description: Lista de usuarios obtenida exitosamente
           content:
             application/json:
@@ -87,10 +87,10 @@ paths:
                   usuarios:
                     type: array
                     items:
-                      $ref: '#/components/schemas/UsuarioResponse'
+                      $ref: "#/components/schemas/UsuarioResponse"
                   pagination:
-                    $ref: '#/components/schemas/Pagination'
-    
+                    $ref: "#/components/schemas/Pagination"
+
     post:
       tags: [Usuarios]
       summary: Crear usuario
@@ -100,18 +100,18 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UsuarioCreate'
+              $ref: "#/components/schemas/UsuarioCreate"
       responses:
-        '201':
+        "201":
           description: Usuario creado exitosamente
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UsuarioResponse'
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '409':
-          $ref: '#/components/responses/Conflict'
+                $ref: "#/components/schemas/UsuarioResponse"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "409":
+          $ref: "#/components/responses/Conflict"
 
   /usuarios/{id}:
     get:
@@ -124,14 +124,14 @@ paths:
           schema:
             type: integer
       responses:
-        '200':
+        "200":
           description: Usuario encontrado
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UsuarioResponse'
-        '404':
-          $ref: '#/components/responses/NotFound'
+                $ref: "#/components/schemas/UsuarioResponse"
+        "404":
+          $ref: "#/components/responses/NotFound"
 
   /usuarios/password-vencidas:
     get:
@@ -139,27 +139,27 @@ paths:
       summary: Usuarios con contraseña vencida
       description: Lista usuarios con contraseña no actualizada en más de 90 días
       responses:
-        '200':
+        "200":
           description: Lista de usuarios con contraseña vencida
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/UsuarioResponse'
+                  $ref: "#/components/schemas/UsuarioResponse"
 
   # ==================== VISTAS AVANZADAS (EJERCICIOS) ====================
   /vistas/canciones-populares-por-pais:
     get:
       tags: [Vistas Avanzadas]
-      summary: 'EJERCICIO 1: Canciones populares por país'
+      summary: "EJERCICIO 1: Canciones populares por país"
       description: |
         **Ejercicio de JOINs complejos**: Obtiene las canciones más reproducidas 
         agrupadas por país de origen de los usuarios.
-        
+
         **JOINs utilizados**: 
         cancion → album → artista, playlist_cancion → playlist → usuario → pais
-        
+
         **Agregaciones**: SUM(reproducciones), COUNT(playlists)
       parameters:
         - name: pais
@@ -183,28 +183,28 @@ paths:
             enum: [reproducciones, apariciones]
             default: reproducciones
       responses:
-        '200':
+        "200":
           description: Datos de canciones populares por país
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/CancionPopularPorPais'
-        '400':
-          $ref: '#/components/responses/BadRequest'
+                  $ref: "#/components/schemas/CancionPopularPorPais"
+        "400":
+          $ref: "#/components/responses/BadRequest"
 
   /vistas/ingresos-por-artista-discografica:
     get:
       tags: [Vistas Avanzadas]
-      summary: 'EJERCICIO 2: Ingresos por artista y discográfica'
+      summary: "EJERCICIO 2: Ingresos por artista y discográfica"
       description: |
         **Ejercicio de JOINs complejos**: Analiza los ingresos generados por cada 
         combinación artista-discográfica con estadísticas detalladas.
-        
+
         **JOINs utilizados**: 
         pago → suscripcion → usuario → playlist → playlist_cancion → cancion → album → artista/discografica → pais
-        
+
         **Agregaciones**: SUM(ingresos), COUNT(suscripciones), AVG(reproducciones)
       parameters:
         - name: pais
@@ -237,7 +237,7 @@ paths:
             type: integer
             default: 20
       responses:
-        '200':
+        "200":
           description: Datos de ingresos por artista y discográfica
           content:
             application/json:
@@ -247,11 +247,11 @@ paths:
                   data:
                     type: array
                     items:
-                      $ref: '#/components/schemas/IngresoPorArtistaDiscografica'
+                      $ref: "#/components/schemas/IngresoPorArtistaDiscografica"
                   pagination:
-                    $ref: '#/components/schemas/Pagination'
-        '400':
-          $ref: '#/components/responses/BadRequest'
+                    $ref: "#/components/schemas/Pagination"
+        "400":
+          $ref: "#/components/responses/BadRequest"
 
 components:
   schemas:
@@ -279,7 +279,7 @@ components:
         fecha_nac:
           type: string
           format: date
-          example: '1995-05-20'
+          example: "1995-05-20"
         sexo:
           type: string
           enum: [M, F]
@@ -287,7 +287,7 @@ components:
         cp:
           type: string
           maxLength: 10
-          example: '4600'
+          example: "4600"
         id_pais:
           type: integer
           example: 1
@@ -307,13 +307,13 @@ components:
         fecha_nac:
           type: string
           format: date
-          example: '1995-05-20'
+          example: "1995-05-20"
         sexo:
           type: string
           example: F
         cp:
           type: string
-          example: '4600'
+          example: "4600"
         id_pais:
           type: integer
           example: 1
@@ -329,6 +329,343 @@ components:
         fecha_creacion:
           type: string
           format: date-time
+
+    AlbumCreate:
+      type: object
+      required:
+        - titulo
+        - id_artista
+        - id_discografica
+      properties:
+        titulo:
+          type: string
+          example: "El Amor Después Del Amor"
+        id_artista:
+          type: integer
+          example: 3
+        id_discografica:
+          type: integer
+          example: 2
+        imagen_portada:
+          type: string
+          example: "https://example.com/portada.jpg"
+        anio_publicacion:
+          type: integer
+          example: 1992
+
+    AlbumResponse:
+      type: object
+      properties:
+        id_album:
+          type: integer
+          example: 1
+        titulo:
+          type: string
+          example: "El Amor Después Del Amor"
+        id_artista:
+          type: integer
+          example: 3
+        id_discografica:
+          type: integer
+          example: 2
+        imagen_portada:
+          type: string
+          example: "https://example.com/portada.jpg"
+        anio_publicacion:
+          type: integer
+          example: 1992
+
+    ArtistaCreate:
+      type: object
+      required:
+        - nombre
+      properties:
+        nombre:
+          type: string
+          example: "Fito Páez"
+      imagen_url:
+        type: string
+        example: "https://example.com/fito.jpg"
+
+    ArtistaResponse:
+      type: object
+      properties:
+        id_artista:
+          type: integer
+          example: 1
+      nombre:
+        type: string
+        example: "Fito Páez"
+      imagen_url:
+        type: string
+        example: "https://example.com/fito.jpg"
+
+    CancionCreate:
+      type: object
+      required:
+        - titulo
+        - duracion_seg
+        - id_album
+      properties:
+      titulo:
+        type: string
+        example: "Mariposa Tecknicolor"
+      duracion_seg:
+        type: integer
+        example: 245
+      id_album:
+        type: integer
+        example: 1
+
+    CancionResponse:
+      type: object
+      properties:
+      id_cancion:
+        type: integer
+        example: 1
+      titulo:
+        type: string
+        example: "Mariposa Tecknicolor"
+      duracion_seg:
+        type: integer
+        example: 245
+      id_album:
+        type: integer
+        example: 1
+
+    GeneroCreate:
+      type: object
+      required:
+        - nombre
+    properties:
+      nombre:
+        type: string
+        example: "Rock"
+
+    GeneroResponse:
+      type: object
+      properties:
+    id_genero:
+      type: integer
+      example: 1
+    nombre:
+      type: string
+      example: "Rock"
+
+    MetodoPagoCreate:
+      type: object
+      required:
+      - id_usuario
+      - tipo_forma_pago
+      - nro_tarjeta
+      - mes_caduca
+      - anio_caduca
+      - banco_codigo
+    properties:
+      id_usuario:
+        type: integer
+        example: 1
+      tipo_forma_pago:
+        type: string
+        enum: [tarjeta, debito, cbu]
+        example: tarjeta
+      nro_tarjeta:
+        type: string
+        example: "4111111111111111"
+      mes_caduca:
+        type: integer
+        example: 12
+      anio_caduca:
+        type: integer
+        example: 2027
+      banco_codigo:
+        type: string
+        example: "BBVA"
+
+    MetodoPagoResponse:
+        type: object
+    properties:
+      id_metodo_pago:
+        type: integer
+        example: 5
+      id_usuario:
+        type: integer
+        example: 1
+    tipo_forma_pago:
+        type: string
+        example: tarjeta
+    nro_tarjeta_masc:
+        type: string
+        example: "1111"
+    mes_caduca:
+        type: integer
+        example: 12
+    anio_caduca:
+        type: integer
+        example: 2027
+    banco_codigo:
+        type: string
+        example: "BBVA"
+    cbu:
+        type: string
+        example: "00123456789012345678"
+
+    PagoCreate:
+      type: object
+      required:
+      - id_usuario
+      - id_suscripcion
+      - id_metodo_pago
+      - importe
+      - fecha_pago
+    properties:
+      id_usuario:
+        type: integer
+        example: 1
+      id_suscripcion:
+        type: integer
+        example: 2
+      id_metodo_pago:
+        type: integer
+        example: 3
+      importe:
+        type: number
+        format: decimal
+        example: 499.99
+      fecha_pago:
+        type: string
+        format: date
+        example: "2024-10-10"
+
+    PagoResponse:
+      type: object
+      properties:
+    id_pago:
+      type: integer
+      example: 10
+    id_usuario:
+      type: integer
+      example: 1
+    id_suscripcion:
+      type: integer
+      example: 2
+    id_metodo_pago:
+      type: integer
+      example: 3
+    importe:
+      type: number
+      format: decimal
+      example: 499.99
+    fecha_pago:
+      type: string
+      format: date
+      example: "2024-10-10"
+
+    PlaylistCreate:
+      type: object
+      required:
+      - titulo
+      - id_usuario
+    properties:
+      titulo:
+        type: string
+        example: "Rock Nacional 80s"
+      id_usuario:
+        type: integer
+        example: 1
+
+    PlaylistResponse:
+        type: object
+    properties:
+      id_playlist:
+        type: integer
+        example: 12
+      titulo:
+        type: string
+        example: "Rock Nacional 80s"
+      id_usuario:
+        type: integer
+        example: 1
+      estado:
+        type: string
+        example: "activo"
+      fecha_eliminada:
+        type: string
+        format: date
+        nullable: true
+        example: null
+
+    PlaylistSoftDelete:
+        type: object
+        required:
+        - estado
+        - fecha_eliminada
+    properties:
+        estado:
+        type: string
+        example: "eliminada"
+    fecha_eliminada:
+        type: string
+        format: date
+        example: "2024-10-10"
+
+    PlaylistCancionAdd:
+      type: object
+      required:
+        - id_cancion
+        - orden
+    properties:
+      id_cancion:
+        type: integer
+        example: 42
+        orden:
+        type: integer
+        example: 1
+
+    SuscripcionCreate:
+      type: object
+      required:
+        - id_usuario
+        - id_tipo_usuario
+        - fecha_inicio
+        - fecha_renovacion
+      properties:
+        id_usuario:
+          type: integer
+          example: 1
+        id_tipo_usuario:
+          type: integer
+          example: 2
+        fecha_inicio:
+          type: string
+          format: date
+          example: "2025-01-01"
+        fecha_renovacion:
+          type: string
+          format: date
+          example: "2025-02-01"
+
+    SuscripcionResponse:
+        type: object
+    properties:
+        id_suscripcion:
+          type: integer
+          example: 10
+        id_usuario:
+          type: integer
+          example: 1
+        tipo_usuario:
+          type: string
+          example: "Premium"
+        fecha_inicio:
+          type: string
+          format: date
+          example: "2025-01-01"
+        fecha_renovacion:
+          type: string
+          format: date
+          example: "2025-02-01"
+
 
     # ==================== SCHEMAS PARA EJERCICIOS ====================
     CancionPopularPorPais:
@@ -432,19 +769,23 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/Error'
+            $ref: "#/components/schemas/Error"
           example:
             error:
               code: VALIDATION_ERROR
               message: Datos de entrada inválidos
-              details: ["El email es obligatorio", "La contraseña debe tener al menos 8 caracteres"]
+              details:
+                [
+                  "El email es obligatorio",
+                  "La contraseña debe tener al menos 8 caracteres",
+                ]
 
     Conflict:
       description: Conflicto - Recurso duplicado
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/Error'
+            $ref: "#/components/schemas/Error"
           example:
             error:
               code: DUPLICATE_ENTRY
@@ -456,7 +797,7 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/Error'
+            $ref: "#/components/schemas/Error"
           example:
             error:
               code: NOT_FOUND
@@ -468,7 +809,7 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/Error'
+            $ref: "#/components/schemas/Error"
           example:
             error:
               code: INTERNAL_SERVER_ERROR
@@ -483,7 +824,7 @@ components:
       bearerFormat: JWT
       description: |
         Token JWT para autenticación (implementación opcional).
-        
+
         Ejemplo de uso:
         ```
         Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
