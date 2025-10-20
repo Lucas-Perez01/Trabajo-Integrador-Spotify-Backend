@@ -1,5 +1,6 @@
 import { sequelize } from "../config/database.js";
 
+// Vista 1: Canciones populares por país
 const cancionesPopularesPorPais = async (req, res) => {
   try {
     const query = `
@@ -39,6 +40,7 @@ const cancionesPopularesPorPais = async (req, res) => {
   }
 };
 
+// Vista 2: Ingresos por artista y discográfica
 const ingresosPorArtistaDiscografica = async (req, res) => {
   try {
     const query = `
