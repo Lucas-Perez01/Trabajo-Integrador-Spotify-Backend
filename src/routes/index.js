@@ -11,6 +11,7 @@ import playlistsRoutes from "./playlists.js";
 import suscripcionesRoutes from "./suscripciones.js";
 import metodosPagoRoutes from "./metodos-pago.js";
 import pagosRoutes from "./pagos.js";
+import vistasRoutes from "./vistas.js";
 
 const router = express.Router();
 
@@ -24,6 +25,7 @@ router.use("/playlists", playlistsRoutes);
 router.use("/suscripciones", suscripcionesRoutes);
 router.use("/metodos-pago", metodosPagoRoutes);
 router.use("/pagos", pagosRoutes);
+router.use("/vistas", vistasRoutes);
 
 // Ruta de prueba
 router.get("/", (req, res) => {
@@ -40,6 +42,7 @@ router.get("/", (req, res) => {
       suscripciones: "/api/v1/suscripciones",
       metodosPago: "/api/v1/metodos-pago",
       pagos: "/api/v1/pagos",
+      vistas: "/api/v1/vistas",
     },
   });
 });
